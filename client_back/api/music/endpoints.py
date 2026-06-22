@@ -8,7 +8,7 @@ router.register('users', UserViewSet)
 router.register('music', MusicViewSet)
 router.register('type-music', TypeMusicViewSet)
 router.register('playlist', PlaylistViewSet)
-router.register('playlists', PlaylistMusicViewSet)
+router.register('music-playlist', PlaylistMusicViewSet)
 router.register('listenhistory', ListenHistoryViewSet)
 router.register('favorite', FavoriteViewSet)
 
