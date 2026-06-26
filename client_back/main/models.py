@@ -137,8 +137,8 @@ class PlaylistMusic(models.Model):
     )
 
     class Meta:
-        verbose_name = "Музыка в плейлисте"
-        verbose_name_plural = "Музыка в плейлистах"
+        verbose_name = "Трек в плейлисте"
+        verbose_name_plural = "Треки в плейлистах"
 
 
 class ListenHistory(models.Model):

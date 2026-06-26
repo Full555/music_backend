@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Music App</title>
+
+    <style>
+        *{
+            margin:0;
+            padding:0;
+            box-sizing:border-box;
+            font-family:Arial, sans-serif;
+        }
+
+        body{
+            min-height:100vh;
+            background:linear-gradient(
+                135deg,
+                #0f172a,
+                #1e293b,
+                #312e81
+            );
+            color:white;
+            padding:40px;
+        }
+
+        h1{
+            text-align:center;
+            margin-bottom:40px;
+            font-size:3rem;
+            animation:fadeDown 1s ease;
+        }
+
+        #music-list{
+            display:grid;
+            grid-template-columns:repeat(
+                auto-fill,
+                minmax(320px,1fr)
+            );
+            gap:25px;
+        }
+
+        .music-card{
+            background:rgba(255,255,255,.08);
+            backdrop-filter:blur(15px);
+            border:1px solid rgba(255,255,255,.1);
+            border-radius:25px;
+            overflow:hidden;
+            transition:.4s;
+            animation:showCard .8s ease;
+        }
+
+        .music-card:hover{
+            transform:translateY(-10px) scale(1.03);
+            box-shadow:0 20px 40px rgba(0,0,0,.5);
+        }
+
+        .music-card img{
+            width:100%;
+            height:260px;
+            object-fit:cover;
+        }
+
+        .music-content{
+            padding:20px;
+        }
+
+        .music-content h3{
+            font-size:1.5rem;
+            margin-bottom:10px;
+        }
+
+        .music-content p{
+            color:#cbd5e1;
+            margin-bottom:15px;
+        }
+
+        audio{
+            width:100%;
+        }
+
+        @keyframes showCard{
+            from{
+                opacity:0;
+                transform:translateY(50px);
+            }
+            to{
+                opacity:1;
+                transform:translateY(0);
+            }
+        }
+
+        @keyframes fadeDown{
+            from{
+                opacity:0;
+                transform:translateY(-50px);
+            }
+            to{
+                opacity:1;
+                transform:translateY(0);
+            }
+        }
+    </style>
+</head>
+<body>
+
+<h1>🎵 Music Library</h1>
+
+<div id="music-list"></div>
+
+<script>
+fetch("http://127.0.0.1:8009/api/music/music/")
+    .then(response => response.json())
+    .then(data => {
+
+        const container =
+            document.getElementById("music-list");
+
+        container.innerHTML = "";
+
+        data.results.forEach(music => {
+
+            container.innerHTML += `
+                <div class="music-card">
+
+                    <img src="${music.image}"
+                         alt="${music.title}">
+
+                    <div class="music-content">
+
+                        <h3>${music.title}</h3>
+
+                        <p>${music.artist}</p>
+
+                        <audio controls>
+                            <source
+                                src="${music.music}">
+                        </audio>
+
+                    </div>
+
+                </div>
+            `;
+        });
+    })
+    .catch(error => {
+        console.error(error);
+    });
+</script>
+
+</body>
+</html>
